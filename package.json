@@ -1,0 +1,11 @@
+{
+  "name": "collective-map",
+  "version": "1.0.0",
+  "description": "Prototype for the collective map",
+  "main": "app.js",
+  "license": "MIT",
+  "engines" : { 
+    "npm" : ">=8.0.0 <9.0.0",
+    "node" : ">=20.10.0 <21.0.0"
+  }
+}
