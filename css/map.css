@@ -1,0 +1,19 @@
+body {
+  background-image: url("https://collective.startupdays.ch/wp-content/uploads/2023/02/SUD_Collective-Background-big.png");
+}
+svg {
+    border: 1px solid black;
+}
+
+.nodes circle {
+    fill: blue;
+}
+
+.links line {
+    stroke: grey;
+    stroke-width: 1px;
+}
+
+.map-container {
+  width: 100%;
+}
