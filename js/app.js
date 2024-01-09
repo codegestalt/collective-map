@@ -14,7 +14,7 @@ Stimulus.register("map", class extends Controller {
   }
 
   loadData() {
-    fetch('https://collective.startupdays.ch/wp-json/wp/v2/partner/')
+    fetch('https://collective.startupdays.ch/wp-json/sud/v1/partner')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -22,35 +22,19 @@ Stimulus.register("map", class extends Controller {
         return response.json();
       })
       .then(data => {
-        // Handle the response data
         this.renderMap(data);
       })
       .catch(error => {
-        // Handle any errors
         console.error('There has been a problem with your fetch operation:', error);
       });
   }
 
   renderMap(data) {
     var nodes = [];
-    // PARTNER: https://collective.startupdays.ch/wp-json/wp/v2/partner/
-    // CATEGORY FILTER: ?bezeichung+ID : https://collective.startupdays.ch/wp-json/wp/v2/partner/?ressources=7
-    // CATEGORY IFNOS: https://collective.startupdays.ch/wp-json/wp/v2/ressources/
+
     data.forEach(function(item, index) {
-      nodes.push({ id: item.id, name: item.acf.company, group: "Education", description: item.acf.description, link: item.link,  logo: "https://collective.startupdays.ch/wp-content/uploads/2023/02/elleXX_Logo_210526.png" });
+      nodes.push({ id: item.id, name: item.company, group: "Education", description: item.description, website: item.website,  logo: item.logo });
     });
-
-    // nodes = [
-    //     { name: 'ElleXX', group: 'Education', logo: "https://collective.startupdays.ch/wp-content/uploads/2023/02/elleXX_Logo_210526.png", description: "elleXX is a whole new ecosystem for women’s financial lives. We combine the imparting of financial knowledge specifically for women with female-friendly and digital financial products ranging from investment products, insurance products to wealth management services." },
-    //     { name: 'Swiss Startup Association', group: 'Community', logo: "https://collective.startupdays.ch/wp-content/uploads/2023/02/Logo-Swiss-Startup-Association.png", description: "Improving the conditions for Swiss startups on a political and educational level and providing them with the necessary viability. Offering many membership benefits, such as a startup desk, networking and events and more. Promoting female founders with events and by promoting already existing organizations." },
-    //     { name: 'Mampreneurs', group: 'Education', logo: "https://collective.startupdays.ch/wp-content/uploads/2023/03/LogoMampreneurs_65x20.jpg", description: "We support women who have made the choice to be entrepreneurs and mothers and we offer them a caring environment for growth. Realizing one's potential is a bold choice that should be within everyone's reach. Sharing this path with our peers allows us to go further. This is the vision that guides the mompreneures" },
-    //     { name: 'SWISSFINTECHLADIES', group: 'Funding', logo: "https://collective.startupdays.ch/wp-content/uploads/2023/02/SFTL_squared.png", description: "No description..." },
-    //     { name: 'Sandborn', group: 'Funding', logo: "https://collective.startupdays.ch/wp-content/uploads/2023/02/SANDBORNLOGOBLACK-03.webp", description: "Hatching ideas into companies by providing guidance, investment and deep operational support. Aiming to address gender bias in venture capital decisions and promoting more diversity in the Swiss start-up scene, by developing solutions & cooperations between (corporate) investors, entrepreneurship experts & facilitators and female founders." },
-    //     { name: 'BFH', group: 'Research', logo: "https://collective.startupdays.ch/wp-content/uploads/2023/02/Logo_BFH@3x.png", description: "Promoting entrepreneurial thinking and acting is a strategic priority. Increasing the diversity of founders helps to achieve a greater impact in society. Bern University of a Applied Sciences (BFH) conducts research on this topic and the Entrepreneurship Office BFH supports initiatives that contribute to this goal." },
-    //     { name: 'FE+MALE TTHINK TANK', group: 'Research', logo: "https://collective.startupdays.ch/wp-content/uploads/2023/02/FeMale-Logo-1-1.png", description: "FE+MALE Think Tank is a nonprofit organization sited in Zürich. With a strong data-driven approach, the Think Tank engages stakeholders to explore unexplored angles to propose alternative solutions to leaders and decision-makers for the benefit of female entrepreneurs. We transfer knowledge into tangible solutions in a way that can be understood by a wide audience. Current projects: INNOVA, The Inclusive Way Initiative (TIWI) sponsored by the Bern Economic Development Agency, and The Beat Funding Bias Initiative (BFBI) sponsored by Gebert Rüf Stiftung" }
-    // ];
-
-    console.log(nodes);
 
     // Links dataset
     const links = [
