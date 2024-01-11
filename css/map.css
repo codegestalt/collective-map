@@ -26,7 +26,6 @@ body {
 }
 
 svg {
-  border: 1px solid black;
 }
 
 .nodes circle {
@@ -40,7 +39,8 @@ svg {
 
 .map-container {
   width: 100vw;
-  height: 100vh;
+  height: 80vh;
+  margin: 0 auto 0 auto;
   cursor: grab;
 }
 
