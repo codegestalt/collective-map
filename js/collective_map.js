@@ -66,17 +66,22 @@ export class CollectiveMap {
             .attr("width", 150)
             .attr("data-target", "map.nodes")
             .on("click", (event, d) => {
+              event.stopPropagation();
               var container = this.container;
               var tooltip = container.querySelector('[data-target="tooltip"]')
 
               tooltip.style.removeProperty("display");
               tooltip.style.left = (event.pageX + 10 + "px")
               tooltip.style.top = (event.pageY + 10 + "px")
-
               tooltip.querySelector('[data-target="name"]').textContent = d.name
               tooltip.querySelector('[data-target="description"]').textContent = d.description
               tooltip.querySelector('[data-target="link"]').href = d.website
             });
+
+    document.addEventListener('click', () => {
+      var tooltip = this.container.querySelector('[data-target="tooltip"]');
+      tooltip.style.display = 'none';
+    });
 
     const zoom = d3.zoom()
       .scaleExtent([1, 8])

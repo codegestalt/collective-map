@@ -52,6 +52,7 @@ svg {
   border: 1px solid #cecece;
   border-radius: 5px;
   width: 500px;
+  cursor: zoom-out;
 }
 
 .tooltip-name {
