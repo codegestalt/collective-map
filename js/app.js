@@ -4,7 +4,7 @@ import { CollectiveMap } from "./collective_map.js"
 window.Stimulus = Application.start()
 
 Stimulus.register("map", class extends Controller {
-  static targets = [ "mapContainer" ]
+  static targets = [ "mapContainer", "nodes" ]
 
   initialize() {
   }
@@ -12,5 +12,10 @@ Stimulus.register("map", class extends Controller {
   connect() {
     this.map = new CollectiveMap(this.mapContainerTarget);
     this.map.fetchData();
+  }
+
+  filterMap() {
+    var filter = event.target.value;
+    this.map.filterAndScale(filter);
   }
 })

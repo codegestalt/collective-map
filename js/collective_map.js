@@ -26,49 +26,29 @@ export class CollectiveMap {
         return response.json();
       })
       .then(data => {
-        this.updateMap(data);
+        this.data = data;
+        this.initializeMap(data);
       })
       .catch(error => {
         console.error('There has been a problem with your fetch operation:', error);
       });
   }
 
-  updateMap(data) {
+  initializeMap(data) {
     var nodes = [];
 
     data.forEach(function(item, index) {
-      nodes.push({ id: item.id, name: item.company, group: "Education", description: item.description, website: item.website,  logo: item.logo });
+      let groups = [];
+      if (item.terms && item.terms.ressources && item.terms.ressources.length > 0) {
+        groups = item.terms.ressources.map(ressource => ressource.slug);
+      }
+      nodes.push({id: item.id, name: item.company, groups: groups, description: item.description, website: item.website, logo: item.logo});
     });
 
     let simulation = d3.forceSimulation(nodes)
       .force("charge", d3.forceManyBody().strength(-50))
-      .force("collide", d3.forceCollide(80))
-      .force("center", d3.forceCenter(this.width / 2, this.height / 2))
-      .force("group", groupForce);
-
-    var node = this.map.append("g")
-        .attr("class", "nodes")
-        .selectAll("image")
-        .data(nodes)
-        .enter().append("image")
-            .attr("xlink:href", d => d.logo)
-            .attr("height", 140)
-            .attr("width", 140)
-            .call(d3.drag()
-                .on("start", dragstarted)
-                .on("drag", dragged)
-                .on("end", dragended));
-
-    let groupBoundingBoxes = {};
-    nodes.forEach(d => {
-      if (!groupBoundingBoxes[d.group]) {
-        groupBoundingBoxes[d.group] = { minX: Infinity, minY: Infinity, maxX: -Infinity, maxY: -Infinity };
-      }
-      groupBoundingBoxes[d.group].minX = Math.min(groupBoundingBoxes[d.group].minX, d.x);
-      groupBoundingBoxes[d.group].minY = Math.min(groupBoundingBoxes[d.group].minY, d.y);
-      groupBoundingBoxes[d.group].maxX = Math.max(groupBoundingBoxes[d.group].maxX, d.x);
-      groupBoundingBoxes[d.group].maxY = Math.max(groupBoundingBoxes[d.group].maxY, d.y);
-    });
+      .force("collide", d3.forceCollide(10))
+      .force("center", d3.forceCenter(this.width / 2, this.height / 2));
 
     simulation.on("tick", () => {
       node
@@ -76,37 +56,59 @@ export class CollectiveMap {
           .attr("y", d => d.y - 170);
     });
 
-    var groupCenters = {
-      'Education': { x: 500, y: 200 },
-      'Community': { x: 400, y: 400 },
-      'Funding': { x: 500, y: 500 },
-      'Research': { x: 700, y: 200 },
-      // ... other groups
-    };
+    var node = this.map.append("g")
+        .attr("class", "nodes")
+        .selectAll("image")
+        .data(nodes)
+        .enter().append("image")
+            .attr("xlink:href", d => d.logo)
+            .attr("height", 150)
+            .attr("width", 150)
+            .attr("data-target", "map.nodes")
+            .on("click", (event, d) => {
+              var container = this.container;
+              var tooltip = container.querySelector('[data-target="tooltip"]')
 
-    function groupForce(alpha) {
-      for (let node of nodes) {
-        let center = groupCenters[node.group];
-        node.vx += (center.x - node.x) * alpha;
-        node.vy += (center.y - node.y) * alpha;
-      }
-    }
+              tooltip.style.removeProperty("display");
+              tooltip.style.left = (event.pageX + 10 + "px")
+              tooltip.style.top = (event.pageY + 10 + "px")
 
-    function dragstarted(event, d) {
-      if (!event.active) simulation.alphaTarget(0.3).restart();
-      d.fx = d.x;
-      d.fy = d.y;
-    }
+              tooltip.querySelector('[data-target="name"]').textContent = d.name
+              tooltip.querySelector('[data-target="description"]').textContent = d.description
+              tooltip.querySelector('[data-target="link"]').href = d.website
+            });
 
-    function dragended(event, d) {
-      if (!event.active) simulation.alphaTarget(0);
-      d.fx = null;
-      d.fy = null;
-    }
+    const zoom = d3.zoom()
+      .scaleExtent([1, 8])
+      .on('zoom', (event) => {
+        this.map.selectAll('g').attr('transform', event.transform);
+      });
+    this.map.call(zoom);
+  }
 
-    function dragged(event, d) {
-      d.fx = event.x;
-      d.fy = event.y;
-    }
+  filterAndScale(filter) {
+    var filteredData = this.data.filter(item =>
+      item.terms &&
+      item.terms.ressources &&
+      item.terms.ressources.some(ressource => ressource.slug === filter)
+    );
+
+    // Clear existing nodes
+    this.map.selectAll('.nodes').remove();
+
+    this.initializeMap(filteredData);
+  }
+
+  filterAndRedraw(filter) {
+    var filteredData = this.data.filter(item =>
+      item.terms &&
+      item.terms.ressources &&
+      item.terms.ressources.some(ressource => ressource.slug === filter)
+    );
+
+    // Clear existing nodes
+    this.map.selectAll('.nodes').remove();
+
+    this.initializeMap(filteredData);
   }
 }

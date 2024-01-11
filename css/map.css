@@ -23,8 +23,8 @@ img {
 }
 
 body {
-  background-image: url("https://collective.startupdays.ch/wp-content/uploads/2023/02/SUD_Collective-Background-big.png");
 }
+
 svg {
   border: 1px solid black;
 }
@@ -41,4 +41,41 @@ svg {
 .map-container {
   width: 100vw;
   height: 100vh;
+  cursor: grab;
+}
+
+.tooltip {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  position: absolute;
+  background-color: white;
+  padding: 10px 25px 30px 25px;
+  border: 1px solid #cecece;
+  border-radius: 5px;
+  width: 500px;
+}
+
+.tooltip-name {
+  font-size: 32px;
+  font-weight: bold;
+  color: #3a183b;
+}
+
+.tooltip-description {
+  font-size: 14px;
+  font-family: "Georgia", sans-serif;
+  padding: 5px 0 15px 0;
+}
+
+.tooltip-link {
+  background-color: #942F6D;
+  display: inline-block;
+  padding: 10px 30px;
+  border-radius: 3px;
+  color: white;
+  font-size: 23px;
+  font-family: "Georgia", sans-serif;
+}
+
+.color-main {
+  color: #942F6D;
 }

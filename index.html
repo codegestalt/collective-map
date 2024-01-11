@@ -6,11 +6,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="css/map.css">
+  <script src="https://cdn.tailwindcss.com"></script>
   <script src="js/app.js" type="module"></script>
-  <!-- <script src="js/map.js" type="module"></script> -->
-  <title>Wireframe</title>
+
+  <title>Collective Map</title>
 </head>
 <body data-controller="map">
-  <div id="d3map" class="map-container" data-map-target="mapContainer"></div>
+  <h1 class="text-center text-4xl mt-8 color-main font-bold">
+    Find the Resources you need to thrive as a Female Founder
+  </h1>
+  <div class="text-center py-8">
+    <select data-action="map#filterMap">
+      <option value="">Filter...</option>
+      <option value="funding">Funding</option>
+      <option value="business-skills">Business Skills</option>
+      <option value="pitching-skills">Pitching Skills</option>
+    </select>
+  </div>
+  <hr>
+  <div id="d3map" class="map-container" data-map-target="mapContainer">
+    <div data-target="tooltip" class="tooltip" style="display: none;">
+      <h1 data-target="name" class="tooltip-name"></h1>
+      <p data-target="description" class="tooltip-description"></p>
+      <a data-target="link" class="tooltip-link" href="" target="_blank">Website</a>
+    </div>
+  </div>
 </body>
 </html>
