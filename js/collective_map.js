@@ -45,6 +45,9 @@ export class CollectiveMap {
       nodes.push({id: item.id, name: item.company, groups: groups, description: item.description, website: item.website, logo: item.logo});
     });
 
+    // NOTE: Uncomment to list all dataset groups in console
+    // this.listDatasetGroups(data);
+
     let simulation = d3.forceSimulation(nodes)
       .force("charge", d3.forceManyBody().strength(-50))
       .force("collide", d3.forceCollide(10))
@@ -91,7 +94,6 @@ export class CollectiveMap {
     this.map.call(zoom);
   }
 
-
   filterAndRedraw(filter) {
     var filteredData = this.data.filter(item =>
       item.terms &&
@@ -106,5 +108,16 @@ export class CollectiveMap {
 
   filterAndScale(filter) {
     // TODO: Implement like filterAndRedraw but resize the nodes instead of removing them
+  }
+
+  listDatasetGroups(data) {
+    let allGroupsSet = new Set();
+    data.forEach(function(item) {
+      if (item.terms && item.terms.ressources && item.terms.ressources.length > 0) {
+        item.terms.ressources.forEach(ressource => allGroupsSet.add(ressource.slug));
+      }
+    });
+    let allGroups = Array.from(allGroupsSet);
+    console.log(allGroups);
   }
 }
