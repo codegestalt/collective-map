@@ -6,16 +6,24 @@ window.Stimulus = Application.start()
 Stimulus.register("map", class extends Controller {
   static targets = [ "mapContainer", "nodes" ]
 
-  initialize() {
-  }
-
   connect() {
     this.map = new CollectiveMap(this.mapContainerTarget);
     this.map.fetchData();
+
+    this.onResize = this.onResize.bind(this);
+    window.addEventListener('resize', this.onResize);
+  }
+
+  disconnect() {
+    window.removeEventListener('resize', this.onResize);
   }
 
   filterMap() {
     var filter = event.target.value;
     this.map.filterAndScale(filter);
+  }
+
+  onResize() {
+    this.map.setCanvasSize();
   }
 })
