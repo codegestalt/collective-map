@@ -86,18 +86,6 @@ export class CollectiveMap {
     this.map.call(zoom);
   }
 
-  filterAndScale(filter) {
-    var filteredData = this.data.filter(item =>
-      item.terms &&
-      item.terms.ressources &&
-      item.terms.ressources.some(ressource => ressource.slug === filter)
-    );
-
-    // Clear existing nodes
-    this.map.selectAll('.nodes').remove();
-
-    this.initializeMap(filteredData);
-  }
 
   filterAndRedraw(filter) {
     var filteredData = this.data.filter(item =>
@@ -106,9 +94,12 @@ export class CollectiveMap {
       item.terms.ressources.some(ressource => ressource.slug === filter)
     );
 
-    // Clear existing nodes
     this.map.selectAll('.nodes').remove();
 
     this.initializeMap(filteredData);
+  }
+
+  filterAndScale(filter) {
+    // TODO: Implement like filterAndRedraw but resize the nodes instead of removing them
   }
 }
