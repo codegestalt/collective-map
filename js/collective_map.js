@@ -48,10 +48,15 @@ export class CollectiveMap {
     // NOTE: Uncomment to list all dataset groups in console
     // this.listDatasetGroups(data);
 
+    let imageWidth = 100;
+    let imageHeight = 100;
+
+    let collisionRadius = Math.sqrt(Math.pow(imageWidth / 2, 2) + Math.pow(imageHeight / 2, 2));
+
     let simulation = d3.forceSimulation(nodes)
-      .force("charge", d3.forceManyBody().strength(-50))
-      .force("collide", d3.forceCollide(10))
-      .force("center", d3.forceCenter(this.width / 2, this.height / 2));
+        .force("charge", d3.forceManyBody().strength(-40))
+        .force("collide", d3.forceCollide(collisionRadius)) // Update this line
+        .force("center", d3.forceCenter(this.width / 2, this.height / 2));
 
     simulation.on("tick", () => {
       node

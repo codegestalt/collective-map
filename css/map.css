@@ -22,6 +22,10 @@ img {
   height: auto;
 }
 
+svg image {
+  cursor: pointer;
+}
+
 .nodes circle {
   fill: blue;
 }
@@ -35,7 +39,6 @@ img {
   width: 100vw;
   height: 80vh;
   margin: 0 auto 0 auto;
-  cursor: grab;
 }
 
 .tooltip {
