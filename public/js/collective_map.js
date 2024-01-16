@@ -70,8 +70,8 @@ export class CollectiveMap {
         .data(nodes)
         .enter().append("image")
             .attr("xlink:href", d => d.logo)
-            .attr("height", 150)
-            .attr("width", 150)
+            .attr("height", 125)
+            .attr("width", 125)
             .attr("data-target", "map.nodes")
             .on("click", (event, d) => {
               event.stopPropagation();
@@ -92,7 +92,7 @@ export class CollectiveMap {
     });
 
     const zoom = d3.zoom()
-      .scaleExtent([1, 8])
+      .scaleExtent([1, 9])
       .on('zoom', (event) => {
         this.map.selectAll('g').attr('transform', event.transform);
       });

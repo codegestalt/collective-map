@@ -39,6 +39,12 @@ svg image {
   width: 100vw;
   height: 80vh;
   margin: 0 auto 0 auto;
+  background: unset;
+  background-image: url(https://collective.startupdays.ch/wp-content/uploads/2023/02/SUD_Collective-Background-big.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
 }
 
 .tooltip {
@@ -76,4 +82,22 @@ svg image {
 
 .color-main {
   color: #942F6D;
+}
+
+.cta-position {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+
+}
+
+.cta-button {
+  background-color: #942F6D;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  display: inline-block;
+  padding: 10px 30px;
+  border-radius: 3px;
+  color: white;
+  font-size: 23px;
+  font-family: "Georgia", sans-serif;
 }

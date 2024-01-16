@@ -17,7 +17,7 @@
   </h1>
   <div class="text-center py-8">
     <select data-action="map#filterMap">
-      <option value="">Filter...</option>
+      <option value="">Alles</option>
       <option value="funding">Funding</option>
       <option value="business-skills">Business Skills</option>
       <option value="pitching-skills">Pitching Skills</option>
@@ -28,11 +28,15 @@
     </select>
   </div>
   <hr>
+
   <div id="d3map" class="map-container" data-map-target="mapContainer">
     <div data-target="tooltip" class="tooltip" style="display: none;">
       <h1 data-target="name" class="tooltip-name"></h1>
       <p data-target="description" class="tooltip-description"></p>
       <a data-target="link" class="tooltip-link" href="" target="_blank">Website</a>
+    </div>
+    <div class="cta-position">
+      <a href="#" target="_blank" class="cta-button">CALL TO ACTION</a>
     </div>
   </div>
 </body>
