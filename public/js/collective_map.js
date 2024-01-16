@@ -99,6 +99,11 @@ export class CollectiveMap {
     this.map.call(zoom);
   }
 
+  redraw() {
+    this.map.selectAll('.nodes').remove();
+    this.initializeMap(this.data);
+  }
+
   filterAndRedraw(filter) {
     var filteredData = this.data.filter(item =>
       item.terms &&
@@ -107,7 +112,6 @@ export class CollectiveMap {
     );
 
     this.map.selectAll('.nodes').remove();
-
     this.initializeMap(filteredData);
   }
 

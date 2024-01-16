@@ -20,7 +20,11 @@ Stimulus.register("map", class extends Controller {
 
   filterMap() {
     var filter = event.target.value;
-    this.map.filterAndRedraw(filter);
+    if (filter == "everything") {
+      this.map.redraw();
+    } else {
+      this.map.filterAndRedraw(filter);
+    }
   }
 
   onResize() {
