@@ -99,26 +99,26 @@ export class CollectiveMap {
     this.map.call(zoom);
   }
 
-  redraw() {
-    this.map.selectAll('.nodes').remove();
-    this.initializeMap(this.data);
-  }
+  redraw(filter) {
+    let dataToUse = this.data;
 
-  filterAndRedraw(filter) {
-    var filteredData = this.data.filter(item =>
-      item.terms &&
-      item.terms.ressources &&
-      item.terms.ressources.some(ressource => ressource.slug === filter)
-    );
+    if (filter) {
+      dataToUse = this.data.filter(item =>
+        item.terms &&
+        item.terms.ressources &&
+        item.terms.ressources.some(ressource => ressource.slug === filter)
+      );
+    }
 
     this.map.selectAll('.nodes').remove();
-    this.initializeMap(filteredData);
+    this.initializeMap(dataToUse);
   }
 
   filterAndScale(filter) {
     // TODO: Implement like filterAndRedraw but resize the nodes instead of removing them
   }
 
+  // HELPER METHODS
   listDatasetGroups(data) {
     let allGroupsSet = new Set();
     data.forEach(function(item) {
