@@ -92,11 +92,19 @@ export class CollectiveMap {
     });
 
     const zoom = d3.zoom()
-      .scaleExtent([1, 9])
+      .scaleExtent([0.1, 32])
       .on('zoom', (event) => {
         this.map.selectAll('g').attr('transform', event.transform);
       });
-    this.map.call(zoom);
+
+    const centerX = this.width / 3.0;
+    const centerY = this.height / 2.5;
+
+    const initialTransform = d3.zoomIdentity
+            .translate(centerX, centerY)
+            .scale(0.4);
+
+    this.map.call(zoom).call(zoom.transform, initialTransform);
   }
 
   redraw(filter) {
